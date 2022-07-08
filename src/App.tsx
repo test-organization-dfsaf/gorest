@@ -1,28 +1,23 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.scss';
+import { HashRouter, Route, Routes } from 'react-router-dom';
+import Container from './components/layout/Container';
+import Row from './components/layout/Row';
+import Col from './components/layout/Col';
+import Home from './pages/Home';
 
 const App = (): JSX.Element => (
-  <div className="App">
-    <header className="bg-red-500">
-      <img src={logo} className="App-logo" alt="logo" />
-      <p>
-        Edit
-        {' '}
-        <code>src/App.tsx</code>
-        {' '}
-        and save to reload.
-      </p>
-      <a
-        className="App-link"
-        href="https://reactjs.org"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        Learn React
-      </a>
-    </header>
-  </div>
+  <Container className="mx-auto flex min-h-screen bg-white">
+    <Row className="my-auto h-full w-screen items-stretch justify-center align-middle">
+      <Col sm={12}>
+        <HashRouter>
+          <Routes>
+            <Route path="/" element={<Home />} />
+          </Routes>
+        </HashRouter>
+      </Col>
+    </Row>
+  </Container>
 );
 
 export default App;
