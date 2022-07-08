@@ -1,6 +1,6 @@
 import React from 'react';
 
-interface IProps {
+interface IButtonProps {
   children: any;
   className?: string;
   disabled?: boolean;
@@ -8,7 +8,7 @@ interface IProps {
   type?: 'button' | 'submit' | 'reset';
 }
 
-const Button = (props: IProps): JSX.Element => {
+const Button = (props: IButtonProps): JSX.Element => {
   const {
     children, className, disabled, onClick, type,
   } = props;
