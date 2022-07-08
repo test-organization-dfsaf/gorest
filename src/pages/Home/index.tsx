@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import Button from '../../components/Button';
 import Col from '../../components/layout/Col';
 import Container from '../../components/layout/Container';
@@ -14,7 +15,9 @@ const Home = (): JSX.Element => (
         <p className="text-center">
           Lorem ipsum dolor sit amet, consectetur adipiscing elit.
         </p>
-        <Button className="mt-4 w-full" type="button">Register</Button>
+        <Link to="/registration">
+          <Button className="mt-4 w-full" type="button">Register</Button>
+        </Link>
       </Col>
     </Row>
   </Container>

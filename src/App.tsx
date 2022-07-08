@@ -5,6 +5,7 @@ import Container from './components/layout/Container';
 import Row from './components/layout/Row';
 import Col from './components/layout/Col';
 import Home from './pages/Home';
+import Registration from './pages/Registration';
 
 const App = (): JSX.Element => (
   <Container className="mx-auto flex min-h-screen bg-white">
@@ -13,6 +14,7 @@ const App = (): JSX.Element => (
         <HashRouter>
           <Routes>
             <Route path="/" element={<Home />} />
+            <Route path="/registration" element={<Registration />} />
           </Routes>
         </HashRouter>
       </Col>
