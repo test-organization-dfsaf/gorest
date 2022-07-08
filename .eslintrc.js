@@ -8,6 +8,8 @@ module.exports = {
     'airbnb',
     'airbnb-typescript',
     "plugin:react-hooks/recommended",
+    'plugin:tailwindcss/recommended'
+
   ],
   parser: '@typescript-eslint/parser',
   parserOptions: {
@@ -22,6 +24,7 @@ module.exports = {
   plugins: [
     'react',
     '@typescript-eslint',
+    'tailwindcss',
   ],
   rules: {
     'import/extensions': [
@@ -61,5 +64,6 @@ module.exports = {
     expect: true,
     jsdom: true,
     JSX: true,
-},
+  },
+  ignorePatterns: ['.eslintrc.js'],
 };
