@@ -21,7 +21,7 @@ import Col from '../../components/layout/Col';
 const validationSchema = Yup.object().shape({
   name: Yup.string().required('Name is required').min(2, 'Nam is too short')
     .max(20, 'Name is too long')
-    .matches(/^[a-zA-Z]+$/, 'Name is invalid'),
+    .matches(/^[a-zA-Z ]+$/, 'Name is invalid'),
   email: Yup.string().email('Invalid email').required('Email is required'),
   gender: Yup.string().required('Gender is required'),
 });
