@@ -21,7 +21,7 @@ const Button = (props: IButtonProps): JSX.Element => {
 
   return (
     <button
-      className={`w-fit rounded-lg bg-primary-400 px-10 py-2 font-semibold text-white shadow-lg transition duration-300 hover:translate-y-0.5 active:translate-y-1 
+      className={`w-fit rounded-lg ${disabled ? 'bg-slate-400' : 'bg-primary-400'} px-10 py-2 font-semibold text-white shadow-lg transition duration-300 hover:translate-y-0.5 active:translate-y-1 
                   ${classes.join(' ')}`}
       disabled={disabled}
       onClick={onClick}
