@@ -19,7 +19,9 @@ import Alert from '../../components/Alert';
 import Col from '../../components/layout/Col';
 
 const validationSchema = Yup.object().shape({
-  name: Yup.string().required('Name is required'),
+  name: Yup.string().required('Name is required').min(2, 'Nam is too short')
+    .max(20, 'Name is too long')
+    .matches(/^[a-zA-Z]+$/, 'Name is invalid'),
   email: Yup.string().email('Invalid email').required('Email is required'),
   gender: Yup.string().required('Gender is required'),
 });
@@ -62,7 +64,7 @@ const Registration = (): JSX.Element => {
       const [status] = values.status;
       values.status = status;
     }
-    if (values.status === '') {
+    if (values.status === '' || values.status === undefined) {
       values.status = 'inactive';
     }
     await createUser(values).then(() => {
@@ -106,12 +108,13 @@ const Registration = (): JSX.Element => {
                   isValid={!(errors.email && touched.email)}
                   errorMessage={errors.email}
                 />
-
                 <FormGroup
-                  className="gap-4"
+                  className="gap-4 py-1"
                   isValid={!(errors.gender && touched.gender)}
                   errorMessage={errors.gender}
                 >
+                  <span>Gender:</span>
+
                   <FormCheck
                     id="male"
                     label="male"
@@ -128,7 +131,8 @@ const Registration = (): JSX.Element => {
                 </FormGroup>
 
                 <Container className="py-1">
-                  <Row>
+                  <Row className="gap-4">
+                    <span>Status:</span>
                     <FormCheck
                       id="status"
                       label="active"
@@ -141,7 +145,7 @@ const Registration = (): JSX.Element => {
                 </Container>
 
                 <Button
-                  className="w-full"
+                  className="my-4 w-full"
                   type="submit"
                   disabled={!isValid}
                 >
