@@ -16,6 +16,14 @@ code {
     monospace;
 }
 
+h1 {
+  @apply text-4xl font-extrabold mb-2;
+}
+
+h2 {
+  @apply text-xl font-extrabold mb-2;
+}
+
 .sm\:, .md\:, .lg\:, .xl\:, .xxl\: {
   &w-12\/12 {
     width: 100%;
