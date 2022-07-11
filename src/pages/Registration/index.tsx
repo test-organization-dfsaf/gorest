@@ -1,88 +1,159 @@
-import React from 'react';
+import React, {
+  useCallback, useEffect, useState,
+} from 'react';
 import {
   Formik,
   Form,
 } from 'formik';
 import * as Yup from 'yup';
+import { useNavigate } from 'react-router-dom';
 import Button from '../../components/Button';
 import FormControl from '../../components/Form/FormControl';
-import { UserRegistrationType } from '../../types';
-import { createUser } from '../../api/registration';
+import { UserListType, UserRegistrationType } from '../../types';
+import { createUser, fetchUsers } from '../../api/registration';
+import FormCheck from '../../components/Form/FormCheck';
+import Container from '../../components/layout/Container';
+import Row from '../../components/layout/Row';
+import FormGroup from '../../components/Form/FormGroup';
+import Alert from '../../components/Alert';
+import Col from '../../components/layout/Col';
 
 const validationSchema = Yup.object().shape({
   name: Yup.string().required('Name is required'),
   email: Yup.string().email('Invalid email').required('Email is required'),
   gender: Yup.string().required('Gender is required'),
-  status: Yup.string().required('Status is required'),
 });
 
 const initialValues: UserRegistrationType = {
   name: '',
   email: '',
   gender: '',
-  status: '',
+  status: 'inactive',
 };
 
 // make registration form
 const Registration = (): JSX.Element => {
-  const handleSubmit = async (values: UserRegistrationType): Promise<void> => {
-    await createUser(values);
-  };
+  const [userList, setUserList] = useState<UserListType>();
+  const [errorMessage, setErrorMessage] = useState<string>();
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const navigate = useNavigate();
+
+  const getUserList = useCallback(async () => {
+    if (!isLoading) return;
+    await fetchUsers().then((res) => {
+      setUserList(res);
+    }).catch((err: any) => {
+      setErrorMessage(err.message);
+    }).finally(() => {
+      setIsLoading(false);
+    });
+  }, [isLoading]);
+
+  useEffect(() => {
+    setIsLoading(true);
+    if (!userList) {
+      getUserList();
+    }
+  }, [getUserList, userList]);
+
+  const handleSubmit = useCallback(async (values: UserRegistrationType): Promise<void> => {
+    // check if values.status is array
+    if (Array.isArray(values.status)) {
+      const [status] = values.status;
+      values.status = status;
+    }
+    if (values.status === '') {
+      values.status = 'inactive';
+    }
+    await createUser(values).then(() => {
+      navigate('/success', { replace: true });
+    }).catch((err: any) => setErrorMessage(err.message));
+  }, [navigate]);
+
+  const handleEmailValidation = useCallback(
+    (email: string): any => (userList?.find((user) => user.email === email) && 'Email is already taken'),
+    [userList],
+  );
 
   return (
-    <div>
-      <h1>Signup</h1>
-      <Formik
-        initialValues={initialValues}
-        validationSchema={validationSchema}
-        onSubmit={handleSubmit}
-        validator={():void => {}}
-      >
-        {({
-          errors, touched,
-        }): JSX.Element => (
-          <Form>
-            <FormControl
-              name="name"
-              type="text"
-              placeholder="Name"
-              isValid={!(errors.name && touched.name)}
-              errorMessage={errors.name}
-            />
+    <Container>
+      <Row className="justify-center">
+        <Col sm={12}>
+          <h1>Registration</h1>
+          <Formik
+            initialValues={initialValues}
+            validationSchema={validationSchema}
+            onSubmit={handleSubmit}
+            validator={():void => {}}
+          >
+            {({
+              errors, touched, isValid,
+            }): JSX.Element => (
+              <Form>
+                <FormControl
+                  name="name"
+                  type="text"
+                  placeholder="Name"
+                  isValid={!(errors.name && touched.name)}
+                  errorMessage={errors.name}
+                />
 
-            <FormControl
-              name="email"
-              type="email"
-              placeholder="Email"
-              isValid={!(errors.email && touched.email)}
-              errorMessage={errors.email}
-            />
+                <FormControl
+                  name="email"
+                  type="email"
+                  placeholder="Email"
+                  validate={handleEmailValidation}
+                  isValid={!(errors.email && touched.email)}
+                  errorMessage={errors.email}
+                />
 
-            <FormControl
-              name="gender"
-              type="text"
-              placeholder="Gender"
-              isValid={!(errors.gender && touched.gender)}
-              errorMessage={errors.gender}
-            />
+                <FormGroup
+                  className="gap-4"
+                  isValid={!(errors.gender && touched.gender)}
+                  errorMessage={errors.gender}
+                >
+                  <FormCheck
+                    id="male"
+                    label="male"
+                    name="gender"
+                    type="radio"
+                  />
 
-            <FormControl
-              name="status"
-              type="text"
-              placeholder="Status"
-              isValid={!(errors.status && touched.status)}
-              errorMessage={errors.status}
-            />
-            <Button
-              className="w-full"
-              type="submit"
-            >
-              Submit
-            </Button>
-          </Form>
-        )}
-      </Formik>
-    </div>
+                  <FormCheck
+                    id="female"
+                    label="female"
+                    name="gender"
+                    type="radio"
+                  />
+                </FormGroup>
+
+                <Container className="py-1">
+                  <Row>
+                    <FormCheck
+                      id="status"
+                      label="active"
+                      name="status"
+                      type="checkbox"
+                      isValid={!(errors.status && touched.status)}
+                      errorMessage={errors.status}
+                    />
+                  </Row>
+                </Container>
+
+                <Button
+                  className="w-full"
+                  type="submit"
+                  disabled={!isValid}
+                >
+                  Submit
+                </Button>
+              </Form>
+            )}
+          </Formik>
+          <Alert message={errorMessage} show={!!errorMessage} />
+        </Col>
+      </Row>
+    </Container>
   );
 };
 
