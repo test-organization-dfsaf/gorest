@@ -10,7 +10,6 @@ const Success = (): JSX.Element => {
 
   const updateUsers = useCallback(() => {
     setUpdateState(updateState + 1);
-    console.log(updateState);
   }, [updateState]);
 
   return (

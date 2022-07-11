@@ -7,7 +7,6 @@ export const fetchUsers = async (): Promise<UserListType> => {
 };
 
 export const createUser = async (user: UserRegistrationType): Promise<{}> => {
-  console.log('token', process.env);
   const response = await apiClient.post('/users', user);
   return response.data as {};
 };
