@@ -11,7 +11,7 @@ import Success from './pages/Success';
 const App = (): JSX.Element => (
   <Container className="mx-auto flex min-h-screen bg-white">
     <Row className="my-auto h-full w-screen items-stretch justify-center px-4 align-middle">
-      <Col sm={4}>
+      <Col sm={12} md={8} lg={4}>
         <HashRouter>
           <Routes>
             <Route path="/" element={<Home />} />
