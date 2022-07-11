@@ -65,5 +65,5 @@ module.exports = {
     jsdom: true,
     JSX: true,
   },
-  ignorePatterns: ['.eslintrc.js'],
+  ignorePatterns: ['.eslintrc.js', 'tailwind.config.js', 'tsconfig.json'],
 };
