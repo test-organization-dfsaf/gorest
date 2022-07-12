@@ -1,6 +1,18 @@
-# Getting Started with Create React App
+# Getting Started with Gorest app
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+
+## Goals of this project
+
+This project is a simple app that allows you to create an account and make some request to manage users data.
+
+## Install dependencies
+
+To install dependencies, run `npm install` in the project directory.
+
+## Setup environment variables
+
+To setup environment variables, you need to rename the `.env.dist` file to `.env` and add your own values. The token will be available in [gorest.co.in](), and it must be set in the `.env` file in the `REACT_APP_TOKEN` variable.
 
 ## Available Scripts
 
