@@ -12,7 +12,7 @@ To install dependencies, run `npm install` in the project directory.
 
 ## Setup environment variables
 
-To setup environment variables, you need to rename the `.env.dist` file to `.env` and add your own values. The token will be available in [gorest.co.in](), and it must be set in the `.env` file in the `REACT_APP_TOKEN` variable.
+To setup environment variables, you need to rename the `.env.dist` file to `.env` and add your own values. The token will be available in [gorest.co.in](https://gorest.co.in), and it must be set in the `.env` file in the `REACT_APP_TOKEN` variable.
 
 ## Available Scripts
 
